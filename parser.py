@@ -73,10 +73,40 @@ def main():
         encoding="utf-8-sig"
     )
 
+    # Подготовка данных для TradingView
+    tv = df.copy()
+
+    tv["time"] = pd.to_datetime(
+        tv["Date"],
+        dayfirst=True
+    ).dt.strftime("%Y-%m-%d")
+
+
+    tv = tv[
+        [
+            "time",
+            "Price"
+        ]
+    ]
+
+
+    tv.columns = [
+        "time",
+        "close"
+    ]
+
+
+    tv.to_csv(
+        "fund214_tv.csv",
+        index=False,
+        encoding="utf-8"
+    )
 
     print()
     print("Готово!")
-    print("Файл:", OUTPUT)
+    print("Файлы:")
+    print("-", OUTPUT)
+    print("- fund214_tv.csv")
     print("Время обновления:",
           datetime.now().strftime("%d.%m.%Y %H:%M"))
 
